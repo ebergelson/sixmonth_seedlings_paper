@@ -2,7 +2,7 @@
 # for Bergelson&Aslin 2017, PNAS
 #it needs the following files in order to run:
 #**sixmonth_basiclevel_home_data_agg_feather** (created by seedlings_basiclevels_dataprep_pnas.R)
-#**sixmonth_basiclevel_home_data_feather** (created by seedlings_basiclevels_dataprep_pnas.R)
+#**sixmonth_seedlings_monthsixonly_feather** (created by sixmonthseedlings_dataprep.R)
 #**video_06_reliability.csv** (created by in-house python scripts, step 4 https://osf.io/cxwyz/wiki/Video%20Reliability%20Checks/)
 #**audio_06_reliability.csv** (created by in-house python scripts, step 6 https://osf.io/cxwyz/wiki/Audio%20Reliability%20Checks/)
 
