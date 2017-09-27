@@ -1,0 +1,17 @@
+type,word1,word2,cosine
+related,foot,hand,0.55069966145371874
+related,stroller,car,0.43117714030997534
+related,juic,milk,0.7109627977088071
+related,mouth,nose,0.69362326696385701
+related,book,ball,0.29073856030497403
+related,blanket,diaper,0.52490226748063895
+related,bottl,spoon,0.47165861800515274
+related,dog,baby,0.048514650707260847
+unrelated,foot,milk,0.017896816560221504
+unrelated,blanket,dog,0.221154754802494
+unrelated,baby,spoon,-0.084157055534362715
+unrelated,book,diaper,0.29024004450549301
+unrelated,juic,car,0.16472713773679337
+unrelated,nose,bottl,0.29865475501722305
+unrelated,hand,stroller,0.32651667681896479
+unrelated,mouth,ball,0.19941315916092889

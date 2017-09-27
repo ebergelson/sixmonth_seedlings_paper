@@ -1,0 +1,267 @@
+---
+title: 'SI For "The Nature and Origins of the Lexicon in Six-month-olds"'
+author: "Elika Bergelson & Richard Aslin"
+csl: pnas.csl
+output:
+  pdf_document:
+    keep_tex: yes
+header-includes: \setlength\parindent{24pt}
+
+#bibliography: library06-12-17.bib
+---
+
+```{r file_info, echo = F}
+# Companion Data File for Bergelson & Aslin 2017, six month study
+# This is the *supplementary online materials* rmd for
+# "The Nature and Origins of the Lexicon in Six-month-olds"
+
+# The eyetracking data were collected from infants in Rochester NY on a Eyelink 1000+
+# The preprocessing script XX.r) precedes subsequent analysis and graphs
+# The output of this pre-processing is a csv (XX.csv) 
+# as well as a feather object (smaller/easier to work with) XX.feather.
+# This pre-processed data file then gets read in by XX.r
+# That's where data aggregation occurs
+# This .rmd,  creates a doc output
+# Please report any problems bugs or errors to Elika Bergelson (elika.bergelson@duke.edu)
+
+#reminders for formatting
+#Figure \@ref(fig:f-design).
+#Table \@ref(tab:t-homestats)) no underscores!
+#references: [@Barrett1978;@Rescorla1980] without name[-@Huettig2005]
+#fig.height=8, fig.width=10 maps onto 4.8" tall by 6"wide in word.
+
+#to change figure labels add this in tex
+#\def\figurename{Figure S\hskip-\the\fontdimen2\font\space }
+#to change table label add this before \begin{table}
+#\renewcommand{\tablename}{Table S\hskip-\the\fontdimen2\font\space }
+#right before the two "\caption{\label{fig:" instances
+```
+
+```{r setup, include = F}
+knitr::opts_chunk$set(
+  cache = T,  
+  fig.height = 12, 
+  fig.width = 16,
+  out.width = '.8\\linewidth' )
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(forcats)
+library(feather)
+library(knitr)
+library(kableExtra)
+
+options(tibble.width = Inf)
+
+options(scipen=999)
+
+
+source(file = "sixmonth_only_stats_pnas.R")
+w2v_sixmonth_cosines <- read_csv("data/w2v_sixmonth_cosines.csv")
+table_prekable <- read_csv("data/06_mo_methods_table_data.csv", 
+    col_types = cols(X1 = col_skip())) 
+
+
+
+```
+
+```{r w2vsim, echo = F, message = F, warning = F, results = "hide"}
+shapiro.test(w2v_sixmonth_cosines$cosine)#p=.89
+w2vsim <- t.test(data = w2v_sixmonth_cosines,
+            cosine~type, conf.int=T)%>%
+  tidy()
+
+```
+
+#Supporting Methods and Materials
+##Eyetracking Target Word Selection and Relatedness Quantification
+The 16 target words tested in the eyetracking experiment were selected as high-frequency concrete nouns commonly heard by infants. These words occurred on average 613 times (R: 46-2197), from 14/16 mothers (R: 6-16) in the Brent Corpus (an audio corpus of mothers and 9–15-month-olds) (31). Many of the words were also used in previous word comprehension studies of 6–9-month-olds (1-4).
+
+To quantify the relatedness among the 'related' and 'unrelated' item-pairs used in the eyetracking experiment, we used a semantic network model (word2vec) over the North American English portion of CHILDES (37), and computed the similarity (i.e. cosine between two word vectors) for each unrelated and related pair. The unrelated pairs had significantly lower similarity (*M* = `r round(w2vsim$estimate2,2)`) than the related pairs (`r round(w2vsim$estimate1,2)`; T(`r round(w2vsim$parameter,2)`) = `r round(w2vsim$p.value,3)`) by Welch two-sample t-test. Code for this analysis is available on github: https://github.com/SeedlingsBabylab/w2v_cosines/.
+
+##Home Recording Data Processing and Sharing
+For the hourlong home video-recordings, the head-camera and camcorder feeds were merged into a single stream using Sony Vegas and exported as .mp4 files for annotation in Datavyu. The daylong home audio recordings were processed using LENAs proprietary algorithm (which provides machine-generated utterance-segmentation); the raw audio-file (.wav) and LENA output were exported for further processing. We converted the LENA output into a CLAN-compatible file (37), for annotation. This provided a ‘skeleton’ with each row’s time-stamp corresponding to a LENA "utterance". We then used Audacity’s Silence Finder algorithm to demark long periods of silence (corresponding to naptime or silent car-rides) in the annotation files. Omitting these silent stretches left 7.25 to 16.00 hours per file (M = 11.17), which were then manually annotated as described in the main manuscript.
+
+Families completed an audio-video release form in which they could elect for their recordings to be shared at several levels: sharing with the lab only, sharing with other authorized researchers (e.g. HomeBank and Databrary), and sharing short excerpts for demonstration purposes in publications and/or research talks. Families were also informed that they could elect not to share a section of any recording, could stop the recording for any reason, and that they should inform anyone who had more than incidental contact with the child that they were being recorded, and obtain their permission. Each release form was collected after the audio and video recording for a given family were completed.
+
+```{r Supplementary Table 1, echo = F, warning = F}
+table_data <- table_prekable %>% 
+  kable(format = "latex", caption = "Questionnaire Results. a:infants who had begun hands-and-knees crawling; b:infants who were exclusively breast-fed; c:infants who are not yet babbling. The `Missing' column reflects how many infants in the lab-and-home (LH) and lab-only (LO) sample did not fill out the questionnaire.") 
+
+table_data %>% 
+  kable_styling(latex_options = c("scale_down"))
+
+```
+
+##Additional Questionnaire Description and Sub-Analysis
+As summarized in the main manuscript, parents completed a series of questionnaires about their infants. They completed the MacArthur-Bates Communicative Development Inventory (MCDI) Words & Gestures Form (38), and two motor surveys: the gross-motor section of the EMQ (39) and four locomotion questions (40). Parents were also orally asked our Word Exposure Survey, which asked how often they believed their child heard our test words on a 5-point scale (1="Never", 5="Several times a day"). Parents also described infants' vocalizations, to ascertain whether canonical babbling had begun, and were asked whether their child was breast-fed or bottle-fed (since ‘milk’ and ‘bottle’ are two of our tested words). 
+
+Parents generally did not believe that their infant understood very many words: the modal number of words infants were reported to understand on the MCDI is 0, with one notable outlier of 162 (see Table S1). This pattern of MCDI results vis-a-vis in-lab data was also found in Bergelson & Swingley (36). We believe this reflects the inherent difficulty in determining whether young infants, who lack overt behavioral cues like pointing or saying words, understand the words around them. Thus, the in-lab results we report underscore the utility of eyetracking measures with infants of this age; subtle eye movements may provide researchers with a way to measure comprehension that caretakers themselves may miss or find hard to assess. 
+
+The questionnaire data, in principle, open up the possibility of further sub-analyses. Given that the majority of infants (in our relatively small sample of 51 six-month-olds) were not yet crawling or babbling, we did not conduct further analyses of these abilities in relation to in-lab or home language data, though plan to do so with data from these children at later timepoints.  For the feeding data, given that ~30% of infants were exclusively breast-fed, we reanalyzed the in-lab data, excluding the item "milk" for these children, under the rationale that our image of milk may not have comported with the majority of their milk experiences. All patterns of significance reported in the main text remained the same. This may reflect that infants have experiences with milk other than during their own feeding (e.g. seeing older children and adults drinking milk), or that infants saw breast-milk in bottles (i.e. parents may report the child is 'breast-fed exclusively' in reference to the source of the milk rather than the delivery method.) It may also reflect that removing one item does not change the robust patterns across conditions we report here, especially given that nearly half of infants did not report feeding survey results, as this questionnaire was added a few months after data collection began (see Table S1). 
+
+```{r breastfed_only, echo = F, warning = F, message = F, eval = F}
+subnums <- read.csv("~/Desktop/studies/sixmonth_seedlings/sixmonthonly_rproject/data/subnums_deid_cleaned_6mo.csv",header = TRUE)
+breastfedonly <- subnums%>%
+  filter(feeding_6mo=="1")%>%
+  mutate(subj = fct_recode(subj,
+                           "01" = "1",
+                           "02" = "2",
+                           "03" = "3",
+                           "04" = "4",
+                           "05" = "5",
+                           "06" = "6",
+                           "07" = "7",
+                           "08" = "8",
+                           "09" = "9"))
+
+
+breastfed_sixmonthseedlings_proptTT_Ss06 <- sixmonthseedlings_proptTT_wins.melt %>%
+  mutate(breastfedmilk = ifelse((subj %in% breastfedonly$subj & target=="milk"), "yes", "no"))%>%
+  filter(breastfedmilk == "no")%>%
+  group_by (subj, month, SubjectNumber, trialtype, numtrials,numtrials_TT)%>%
+  summarise(cross_item_mean_proptTT = mean(propt_longTT, na.rm=T),
+            cross_item_mean_proptcorrTT = mean(proptcorrTT, na.rm=T),
+            cross_item_mean_proptpreTT = mean(propt_preTT, na.rm=T))%>%
+  group_by(month)%>%
+  mutate(outlier = (cross_item_mean_proptcorrTT > 
+                      (mean(cross_item_mean_proptcorrTT) + 
+                         3*(sd(cross_item_mean_proptcorrTT))) |
+                      cross_item_mean_proptcorrTT <
+                      (mean(cross_item_mean_proptcorrTT) - 
+                         3*(sd(cross_item_mean_proptcorrTT)))))%>%
+  filter(month=="06" & outlier==F)
+
+breastfed_sixmonthseedlings_proptTT_items06 <- sixmonthseedlings_proptTT_wins.melt %>%
+  mutate(breastfedmilk = ifelse((subj %in% breastfedonly$subj & target=="milk"), "yes", "no"))%>%
+  filter(breastfedmilk == "no")%>%
+  group_by(target ,month, trialtype)%>%
+  summarise(cross_item_mean_proptTT = mean(propt_longTT, na.rm=T),
+            cross_item_mean_proptcorrTT = mean(proptcorrTT, na.rm=T),
+            cross_item_mean_proptpreTT = mean(propt_preTT, na.rm=T))%>%
+  group_by(month, trialtype)%>%
+  mutate(outlier = (cross_item_mean_proptcorrTT > 
+                      (mean(cross_item_mean_proptcorrTT) + 
+                         3*(sd(cross_item_mean_proptcorrTT))) |
+                      cross_item_mean_proptcorrTT <
+                      (mean(cross_item_mean_proptcorrTT) - 
+                         3*(sd(cross_item_mean_proptcorrTT)))))%>%
+  filter(month=="06")
+
+
+breastfed_sixmonthseedlings_propt_Ss06 <- sixmonthseedlings_propt_wins.melt_x %>%
+  mutate(breastfedmilk = ifelse((subj %in% breastfedonly$subj & target=="milk"), "yes", "no"))%>%
+  filter(breastfedmilk == "no")%>%
+  group_by (subj, month, SubjectNumber)%>%
+  summarise(cross_item_mean_propt = mean(propt_long, na.rm=T),
+            cross_item_mean_proptcorr = mean(proptcorr, na.rm=T),
+            cross_item_mean_proptpre = mean(propt_pre, na.rm=T))%>%
+  group_by(month)%>%
+  mutate(outlier = (cross_item_mean_proptcorr > 
+                      (mean(cross_item_mean_proptcorr, na.rm=T) + 
+                         3*(sd(cross_item_mean_proptcorr, na.rm=T))) |
+                      cross_item_mean_proptcorr <
+                      (mean(cross_item_mean_proptcorr, na.rm=T) - 
+                         3*(sd(cross_item_mean_proptcorr, na.rm=T)))))%>%
+  filter(month=="06" & outlier==F)
+
+breastfed_missingTT_Ss <- breastfed_sixmonthseedlings_proptTT_Ss06%>%
+  group_by(subj)%>%
+  filter(!is.na(cross_item_mean_proptcorrTT))%>% # no NAs anyway
+  tally()%>%
+  filter(n!=2)
+#same as in full sample: 05 and 06
+#shapiro test: 
+shapiro.test(breastfed_sixmonthseedlings_proptTT_Ss06$cross_item_mean_proptcorrTT)
+shapiro.test(breastfed_sixmonthseedlings_propt_Ss06$cross_item_mean_proptcorr)
+
+#t-tests:
+bf_unrelated_ttest<-t.test(filter(breastfed_sixmonthseedlings_proptTT_Ss06,
+                     !subj %in%breastfed_missingTT_Ss$subj &
+                       trialtype=="between")$cross_item_mean_proptcorrTT)%>%
+  tidy()
+bf_related_ttest <-t.test(filter(breastfed_sixmonthseedlings_proptTT_Ss06,
+                     !subj %in%breastfed_missingTT_Ss$subj &
+                       trialtype=="within")$cross_item_mean_proptcorrTT)%>%
+  tidy()
+
+bf_et_trialtype_ttest <- t.test(data = filter(breastfed_sixmonthseedlings_proptTT_Ss06, !subj %in%breastfed_missingTT_Ss$subj), cross_item_mean_proptcorrTT~trialtype, paired=T)%>%
+  tidy()
+
+bf_overall_ttest<-t.test(filter(breastfed_sixmonthseedlings_propt_Ss06,
+                             !subj %in%missingTT_Ss$subj & 
+        !startsWith(as.character(subj),"ns"))$cross_item_mean_proptcorr)%>%
+  tidy()
+
+```
+
+##Data Exclusion 
+As stated in the main manuscript, we opted to exclude data at the trial level, rather than the infant level, in order to retain infants in the home and lab analyses. Given our relatively large number of trials per infant (n=32), we were able to proceed with analysis using trials of comparable and sufficient data quality. Noting that practices vary across labs and studies, we provide here the exclusion rates from language comprehension studies with young infants, to help situate our trial exclusion rate. In two studies with six-month-olds, Tincoff and Jusczyk (4,5) presented infants with a single test trial, and excluded 20-33% of the sample for failure to complete the trial due to inattention or fussiness. Parise and Csibra (3) excluded 43% of nine-month-olds in a word comprehension EEG study. In the present eyetracking study, we retain approximately half of the trials, from most participants. Given that the lab-and-home sample (n=44) was part of a longitudinal set of recordings and in-lab studies, ongoing research with these same infants over time will allow us to assess whether fussiness and inattentive behavior at six months is predictive of subsequent behavior in eye-tracking experiments, and in measures of language development.
+
+```{r f-itemmeans, fig.height=3, fig.width=6.5, message = F, echo = F, warning = F,  fig.cap="\\label{fig:f-itemmeans}Item-level performance, across subjects, in each condition. Bars are ordered by cross-condition average for each item"}
+#was 1.5 height 3.25 width
+ggplot(sixmonthseedlings_proptTT_items06,
+       aes(reorder(target, -cross_item_mean_proptcorrTT),
+           cross_item_mean_proptcorrTT, color = trialtype,
+           fill = target, linetype = trialtype))+
+  stat_summary(fun.y=mean, geom="bar", position = position_dodge())+
+  geom_hline(yintercept = 0)+
+  scale_color_manual(values = c("black","black"))+
+  #theme_bw(base_size = 7)+
+  theme_bw(base_size = 10)+
+  facet_wrap(~trialtype,labeller = labeller(trialtype = tt_labeller), nrow=1)+
+  guides(linetype=F,
+         color = F,
+         fill = F)+
+  xlab("item")+
+  ylab("baseline-corrected \nitem mean comprehension")+
+  #theme(axis.text.x =  element_text(angle=45, vjust=.15,size=5))
+  theme(axis.text.x =  element_text(angle=45, vjust=.15,size=7))
+```
+
+```{r f-timecourse, fig.height=3, fig.width=5, message = F, echo = F, warning = F, fig.cap="\\label{fig:f-timecourse}Timecourse of infant gaze by trial-type. This figure shows the proportion of fixation to the target image over time, for each trial-type (blue = unrelated; grey = related). We smooth over each 20ms bin, averaging over subjects and trials, and add 95\\% bootstrapped CIs. Black vertical lines demark the target window of analysis (367-5000ms.) The baseline window is all looking before target onset, i.e. time <0"}
+
+#was height 1.5 width 2.5 and all text sizes a little larger
+ggplot(filter(sixmonth_seedlings_test, month=="06" & Nonset<5000 & Nonset>-750 & !subj %in%missingTT_Ss$subj), 
+       aes(Nonset,  propt,  color=trialtype, linetype = trialtype)) + 
+  stat_smooth(geom="point", size = .5, alpha = .8)+
+  stat_smooth(geom="errorbar", size = .5, alpha = .8) + geom_hline(yintercept=.5) + 
+  coord_cartesian(ylim=c(.4, .6)) + 
+  geom_vline(xintercept=367) + geom_vline(xintercept=5000) + 
+  #theme_bw(base_size=8)+
+  theme_bw(base_size=10)+
+  theme(legend.position = c(.5,.15),
+        #legend.text = element_text(size =5),
+        legend.text = element_text(size =7),
+        #legend.key.height = unit(.15, "cm"),
+        legend.key.height = unit(.3, "cm"),
+        #legend.title=element_blank(),
+        #legend.key = element_rect(fill = "transparent", colour = "transparent", size = .4))+
+        legend.key = element_rect(fill = "transparent", colour = "transparent", size = .8))+
+  xlab("Time from Target Word Onset (ms)")+
+  scale_colour_manual(name = "Trial Type",
+                      labels=c("unrelated","related"),
+                        values = c("blue","darkgrey"))+
+  ylab("Proportion of \nTarget Looking")+
+  scale_shape_discrete(solid=F)+
+  scale_linetype_discrete(name = "Trial Type",
+    labels=c("unrelated","related"))
+
+```
+
+#Supplementary Figures
+Figures S1 and S2 supplement the analyses provided in the main manuscript.
+
+#Supplementary Multi-Media
+The clips linked in the Supplementary Online Materials show three sample audio clips, and two sample video clips from the corpus. Parents provided permission for these to be shared with researchers.
+As explained in the manuscript, each object word was tagged for utterance-type, talker, and object co-presence. We provide clips with a range of object co-presence for clarity on how this was determined in our audio and video files.  
+
+**Audio Clip 1 (audio_clip1_lowobjectpresence.mp3)**: in this clip, the infant's father discusses his missing phone with his six-month-old. This is an example of low object co-presence, since the phone is not present as the father discusses it.  
+
+**Audio Clip 2 (audio_clip2_highobjecpresence.mp3)**: in this clip, the infant's mother and father are reading a book to their child. We hear the pages being turned, suggesting the book and the items it describes are present and attended to as they are mentioned.  
+
+**Audio Clip 3 (audio_clip3_mixedobjectpresence.mp3)**: in this clip, the mother is nursing, and mentions a future eating-at-the-beach event. We can infer from context that the babyfood and sand discussed are not co-present in the scene. In contrast, the sweet potato she says is in the child's eye was tagged as co-present.  
+
+**Video Clip 1 (video_clip1_lowobjecpresence.mov)**: in this clip, the father is singing and dancing with his child. None of the words in the song (e.g. "chickie", "egg") are co-present in the scene.  
+
+**Video Clip 2 (video_clip2_highobjectpresence.mov)**: in this clip, the mother is reading a picturebook to her child. We see from his head-mounted cameras and the camcorder that the images in the book go with the words that the mother is saying, and that the child is attending to them, i.e. they are 'co-present'.   
