@@ -1,0 +1,296 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={SI For The Nature and Origins of the Lexicon in Six-month-olds},
+            pdfauthor={Elika Bergelson \& Richard Aslin},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\newcommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+  \title{SI For ``The Nature and Origins of the Lexicon in Six-month-olds''}
+  \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+  \author{Elika Bergelson \& Richard Aslin}
+  \preauthor{\centering\large\emph}
+  \postauthor{\par}
+  \date{}
+  \predate{}\postdate{}
+
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage[table]{xcolor}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\setlength\parindent{24pt}
+
+\begin{document}
+\maketitle
+
+\section{Supporting Methods and
+Materials}\label{supporting-methods-and-materials}
+
+\subsection{Eyetracking Target Word Selection and Relatedness
+Quantification}\label{eyetracking-target-word-selection-and-relatedness-quantification}
+
+The 16 target words tested in the eyetracking experiment were selected
+as high-frequency concrete nouns commonly heard by infants. These words
+occurred on average 613 times (R: 46-2197), from 14/16 mothers (R: 6-16)
+in the Brent Corpus (an audio corpus of mothers and 9--15-month-olds)
+(31). Many of the words were also used in previous word comprehension
+studies of 6--9-month-olds (1-4).
+
+To quantify the relatedness among the `related' and `unrelated'
+item-pairs used in the eyetracking experiment, we used a semantic
+network model (word2vec) over the North American English portion of
+CHILDES (37), and computed the similarity (i.e.~cosine between two word
+vectors) for each unrelated and related pair. The unrelated pairs had
+significantly lower similarity (\emph{M} = 0.18) than the related pairs
+(0.47; T(12.19) = 0.009) by Welch two-sample t-test. Code for this
+analysis is available on github:
+\url{https://github.com/SeedlingsBabylab/w2v_cosines/}.
+
+\subsection{Home Recording Data Processing and
+Sharing}\label{home-recording-data-processing-and-sharing}
+
+For the hourlong home video-recordings, the head-camera and camcorder
+feeds were merged into a single stream using Sony Vegas and exported as
+.mp4 files for annotation in Datavyu. The daylong home audio recordings
+were processed using LENAs proprietary algorithm (which provides
+machine-generated utterance-segmentation); the raw audio-file (.wav) and
+LENA output were exported for further processing. We converted the LENA
+output into a CLAN-compatible file (37), for annotation. This provided a
+`skeleton' with each row's time-stamp corresponding to a LENA
+``utterance''. We then used Audacity's Silence Finder algorithm to
+demark long periods of silence (corresponding to naptime or silent
+car-rides) in the annotation files. Omitting these silent stretches left
+7.25 to 16.00 hours per file (M = 11.17), which were then manually
+annotated as described in the main manuscript.
+
+Families completed an audio-video release form in which they could elect
+for their recordings to be shared at several levels: sharing with the
+lab only, sharing with other authorized researchers (e.g.~HomeBank and
+Databrary), and sharing short excerpts for demonstration purposes in
+publications and/or research talks. Families were also informed that
+they could elect not to share a section of any recording, could stop the
+recording for any reason, and that they should inform anyone who had
+more than incidental contact with the child that they were being
+recorded, and obtain their permission. Each release form was collected
+after the audio and video recording for a given family were completed.
+\renewcommand{\tablename}{Table S\hskip-\the\fontdimen2\font\space }
+\begin{table}
+
+\caption{\label{tab:Supplementary Table 1}Questionnaire Results. a:infants who had begun hands-and-knees crawling; b:infants who were exclusively breast-fed; c:infants who are not yet babbling. The `Missing' column reflects how many infants in the lab-and-home (LH) and lab-only (LO) sample did not fill out the questionnaire.}
+\centering
+\resizebox{\linewidth}{!}{\begin{tabular}[t]{l|l|l|l|l}
+\hline
+Measure & Lab-and-Home & Lab-Only & All Infants & Missing\\
+\hline
+MCDI: Tested Words & M=1.52 (2.51), R: 0-12, mode=0 & M=3.46(4.63), R: 0-15, mode=0 & M=1.96(3.18), R: 0-15, mode=0 & 1 LH\\
+\hline
+MCDI: All Words & M=9.43 (16.57), R: 0-75, mode=0 & M=23.85(43.41), R: 0-162, mode=0 & M=12.72(25.53), R: 0-162, mode=0 & 1 LH\\
+\hline
+Word Exposure & M=3.92(0.67), R: 2.09-4.93, mode=4 & M=3.92(0.6), R: 2.62-5, mode=4 & M=3.92(0.64), R: 2.21-4.95, mode=4 & 0 LH, 1 LO\\
+\hline
+Motor Status (a) & 2.27\% & 0\% & 1.79\% & 1 LH, 1 LO\\
+\hline
+Feeding Status (b) & 31.03\% & 16.67\% & 28.57\% & 15 LH, 8 LO\\
+\hline
+Production Status (c) & 75\% & 58.33\% & 71.43\% & 0 LH, 2 LO\\
+\hline
+\end{tabular}}
+\end{table}
+
+\subsection{Additional Questionnaire Description and
+Sub-Analysis}\label{additional-questionnaire-description-and-sub-analysis}
+
+As summarized in the main manuscript, parents completed a series of
+questionnaires about their infants. They completed the MacArthur-Bates
+Communicative Development Inventory (MCDI) Words \& Gestures Form (38),
+and two motor surveys: the gross-motor section of the EMQ (39) and four
+locomotion questions (40). Parents were also orally asked our Word
+Exposure Survey, which asked how often they believed their child heard
+our test words on a 5-point scale (1=``Never'', 5=``Several times a
+day''). Parents also described infants' vocalizations, to ascertain
+whether canonical babbling had begun, and were asked whether their child
+was breast-fed or bottle-fed (since `milk' and `bottle' are two of our
+tested words).
+
+Parents generally did not believe that their infant understood very many
+words: the modal number of words infants were reported to understand on
+the MCDI is 0, with one notable outlier of 162 (see Table S1). This
+pattern of MCDI results vis-a-vis in-lab data was also found in
+Bergelson \& Swingley (36). We believe this reflects the inherent
+difficulty in determining whether young infants, who lack overt
+behavioral cues like pointing or saying words, understand the words
+around them. Thus, the in-lab results we report underscore the utility
+of eyetracking measures with infants of this age; subtle eye movements
+may provide researchers with a way to measure comprehension that
+caretakers themselves may miss or find hard to assess.
+
+The questionnaire data, in principle, open up the possibility of further
+sub-analyses. Given that the majority of infants (in our relatively
+small sample of 51 six-month-olds) were not yet crawling or babbling, we
+did not conduct further analyses of these abilities in relation to
+in-lab or home language data, though plan to do so with data from these
+children at later timepoints. For the feeding data, given that
+\textasciitilde{}30\% of infants were exclusively breast-fed, we
+reanalyzed the in-lab data, excluding the item ``milk'' for these
+children, under the rationale that our image of milk may not have
+comported with the majority of their milk experiences. All patterns of
+significance reported in the main text remained the same. This may
+reflect that infants have experiences with milk other than during their
+own feeding (e.g.~seeing older children and adults drinking milk), or
+that infants saw breast-milk in bottles (i.e.~parents may report the
+child is `breast-fed exclusively' in reference to the source of the milk
+rather than the delivery method.) It may also reflect that removing one
+item does not change the robust patterns across conditions we report
+here, especially given that nearly half of infants did not report
+feeding survey results, as this questionnaire was added a few months
+after data collection began (see Table S1).
+
+\subsection{Data Exclusion}\label{data-exclusion}
+
+As stated in the main manuscript, we opted to exclude data at the trial
+level, rather than the infant level, in order to retain infants in the
+home and lab analyses. Given our relatively large number of trials per
+infant (n=32), we were able to proceed with analysis using trials of
+comparable and sufficient data quality. Noting that practices vary
+across labs and studies, we provide here the exclusion rates from
+language comprehension studies with young infants, to help situate our
+trial exclusion rate. In two studies with six-month-olds, Tincoff and
+Jusczyk (4,5) presented infants with a single test trial, and excluded
+20-33\% of the sample for failure to complete the trial due to
+inattention or fussiness. Parise and Csibra (3) excluded 43\% of
+nine-month-olds in a word comprehension EEG study. In the present
+eyetracking study, we retain approximately half of the trials, from most
+participants. Given that the lab-and-home sample (n=44) was part of a
+longitudinal set of recordings and in-lab studies, ongoing research with
+these same infants over time will allow us to assess whether fussiness
+and inattentive behavior at six months is predictive of subsequent
+behavior in eye-tracking experiments, and in measures of language
+development.
+
+\begin{figure}
+\includegraphics[width=.8\linewidth]{Bergelson_Aslin_pnas_som_manualrefs_files/figure-latex/f-itemmeans-1} \def\figurename{Figure S\hskip-\the\fontdimen2\font\space }\caption{\label{fig:f-itemmeans}Item-level performance, across subjects, in each condition. Bars are ordered by cross-condition average for each item}\label{fig:f-itemmeans}
+\end{figure}
+
+\begin{figure}
+\includegraphics[width=.8\linewidth]{Bergelson_Aslin_pnas_som_manualrefs_files/figure-latex/f-timecourse-1} \def\figurename{Figure S\hskip-\the\fontdimen2\font\space }\caption{\label{fig:f-timecourse}Timecourse of infant gaze by trial-type. This figure shows the proportion of fixation to the target image over time, for each trial-type (blue = unrelated; grey = related). We smooth over each 20ms bin, averaging over subjects and trials, and add 95\% bootstrapped CIs. Black vertical lines demark the target window of analysis (367-5000ms.) The baseline window is all looking before target onset, i.e. time <0}\label{fig:f-timecourse}
+\end{figure}
+
+\section{Supplementary Figures}\label{supplementary-figures}
+
+Figures S1 and S2 supplement the analyses provided in the main
+manuscript.
+
+\section{Supplementary Multi-Media}\label{supplementary-multi-media}
+
+The clips linked in the Supplementary Online Materials show three sample
+audio clips, and two sample video clips from the corpus. Parents
+provided permission for these to be shared with researchers. As
+explained in the manuscript, each object word was tagged for
+utterance-type, talker, and object co-presence. We provide clips with a
+range of object co-presence for clarity on how this was determined in
+our audio and video files.
+
+\textbf{Audio Clip 1 (audio\_clip1\_lowobjectpresence.mp3)}: in this
+clip, the infant's father discusses his missing phone with his
+six-month-old. This is an example of low object co-presence, since the
+phone is not present as the father discusses it.
+
+\textbf{Audio Clip 2 (audio\_clip2\_highobjecpresence.mp3)}: in this
+clip, the infant's mother and father are reading a book to their child.
+We hear the pages being turned, suggesting the book and the items it
+describes are present and attended to as they are mentioned.
+
+\textbf{Audio Clip 3 (audio\_clip3\_mixedobjectpresence.mp3)}: in this
+clip, the mother is nursing, and mentions a future eating-at-the-beach
+event. We can infer from context that the babyfood and sand discussed
+are not co-present in the scene. In contrast, the sweet potato she says
+is in the child's eye was tagged as co-present.
+
+\textbf{Video Clip 1 (video\_clip1\_lowobjecpresence.mov)}: in this
+clip, the father is singing and dancing with his child. None of the
+words in the song (e.g. ``chickie'', ``egg'') are co-present in the
+scene.
+
+\textbf{Video Clip 2 (video\_clip2\_highobjectpresence.mov)}: in this
+clip, the mother is reading a picturebook to her child. We see from his
+head-mounted cameras and the camcorder that the images in the book go
+with the words that the mother is saying, and that the child is
+attending to them, i.e.~they are `co-present'.
+
+
+\end{document}
